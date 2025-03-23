@@ -308,7 +308,7 @@ def generate_preset(theme):
     return event
 
 
-def create_xmp_file(preset_data, file_path):
+def create_xmp_file(preset_data):
     # Create the root element
     xmpmeta = ET.Element('x:xmpmeta', {
         'xmlns:x': 'adobe:ns:meta/',
@@ -354,14 +354,10 @@ def create_xmp_file(preset_data, file_path):
         else:
             description.set(f'crs:{key}', str(value))
 
-    # Write the XMP to a file
-    # tree = ET.ElementTree(xmpmeta)
-    # tree.write(event['Name'] + '.xmp', encoding='utf-8', xml_declaration=True)
-
     # Convert to string
-    # from io import BytesIO
-    # xml_bytes = BytesIO()
-
-    # Save file
+    from io import BytesIO
+    xml_bytes = BytesIO()
     tree = ET.ElementTree(xmpmeta)
-    tree.write(file_path, encoding='utf-8', xml_declaration=True)
+    tree.write(xml_bytes, encoding='utf-8', xml_declaration=True)
+
+    return xml_bytes.getvalue().decode('utf-8')

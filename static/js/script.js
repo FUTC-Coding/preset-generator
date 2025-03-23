@@ -3,22 +3,118 @@ document.addEventListener('DOMContentLoaded', function() {
     const themeInput = document.getElementById('preset-theme');
     const generateBtn = document.getElementById('generate-btn');
     const loadingSection = document.getElementById('loading');
+    const successAnimation = document.getElementById('success-message');
+    const errorMessage = document.getElementById('error-message');
+    const errorText = document.getElementById('error-text');
     const exampleChips = document.querySelectorAll('.chip');
 
+    // Track if a download is in progress
+    let downloadInProgress = false;
+
     // Handle form submission
-    presetForm.addEventListener('submit', function(event) {
+    presetForm.addEventListener('submit', async function(event) {
+        // Prevent the default form submission
+        event.preventDefault();
+
         const theme = themeInput.value.trim();
 
         if (!theme) {
-            event.preventDefault();
-            alert('Please enter a preset theme description');
+            showError("Please enter a preset theme description");
             return;
         }
 
-        // Show loading, hide button
+        if (downloadInProgress) {
+            return;
+        }
+
+        // Show loading, hide other states
         loadingSection.classList.remove('hidden');
+        successAnimation.classList.add('hidden');
+        errorMessage.classList.add('hidden');
         generateBtn.disabled = true;
+        downloadInProgress = true;
+
+        try {
+            // Create form data for the request
+            const formData = new FormData();
+            formData.append('theme', theme);
+
+            // Send request to server
+            const response = await fetch('/generate-preset', {
+                method: 'POST',
+                body: formData
+            });
+
+            console.log("Response:", response);
+
+            // Parse the JSON response
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error || 'Failed to generate preset');
+            }
+
+            if (!data.success) {
+                throw new Error(data.error || 'Failed to generate preset');
+            }
+
+            // Create and download the XMP file
+            downloadXmpFile(data.xmp_content, data.preset_name);
+
+            // Show success animation
+            showSuccess();
+
+        } catch (error) {
+            console.error('Error:', error);
+            showError(error.message);
+        }
     });
+
+    // Function to create and download an XMP file
+    function downloadXmpFile(xmpContent, presetName) {
+        // Create a blob with the XMP content
+        const blob = new Blob([xmpContent], { type: 'application/xml' });
+
+        // Create a URL for the blob
+        const url = URL.createObjectURL(blob);
+
+        // Create a temporary link element
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `${presetName}.xmp`;
+
+        // Append to the document, click it, and remove it
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        // Clean up the URL object
+        URL.revokeObjectURL(url);
+    }
+
+    // Function to show success state
+    function showSuccess() {
+        loadingSection.classList.add('hidden');
+        errorMessage.classList.add('hidden');
+        successAnimation.classList.remove('hidden');
+
+        // Reset state after animation
+        setTimeout(function() {
+            successAnimation.classList.add('hidden');
+            generateBtn.disabled = false;
+            downloadInProgress = false;
+        }, 3000);
+    }
+
+    // Function to show error state
+    function showError(message) {
+        loadingSection.classList.add('hidden');
+        successAnimation.classList.add('hidden');
+        errorText.textContent = message;
+        errorMessage.classList.remove('hidden');
+        generateBtn.disabled = false;
+        downloadInProgress = false;
+    }
 
     // Handle example chips
     exampleChips.forEach(chip => {

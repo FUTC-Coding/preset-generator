@@ -1,6 +1,8 @@
 :root {
     --primary-color: #4C6EF5;
     --secondary-color: #F06595;
+    --success-color: #40C057;
+    --error-color: #FA5252;
     --background-color: #F8F9FA;
     --card-color: #FFFFFF;
     --text-color: #343A40;
@@ -133,6 +135,119 @@ textarea:focus {
     to { transform: rotate(360deg); }
 }
 
+/* Success Animation */
+/*.success-animation {*/
+/*    text-align: center;*/
+/*    padding: 2rem 0;*/
+/*}*/
+
+/*.success-animation p {*/
+/*    margin-top: 1rem;*/
+/*    color: var(--success-color);*/
+/*    font-weight: 600;*/
+/*}*/
+
+/*.checkmark-circle {*/
+/*    width: 56px;*/
+/*    height: 56px;*/
+/*    position: relative;*/
+/*    display: inline-block;*/
+/*    vertical-align: top;*/
+/*    margin-left: auto;*/
+/*    margin-right: auto;*/
+/*}*/
+
+/*.checkmark-circle .background {*/
+/*    width: 56px;*/
+/*    height: 56px;*/
+/*    border-radius: 50%;*/
+/*    background: var(--success-color);*/
+/*    position: absolute;*/
+/*}*/
+
+/*.checkmark {*/
+/*    border-radius: 50%;*/
+/*    display: block;*/
+/*    stroke-width: 6;*/
+/*    stroke: var(--success-color);*/
+/*    stroke-miterlimit: 10;*/
+/*    margin: 10% auto;*/
+/*    box-shadow: inset 0px 0px 0px var(--success-color);*/
+/*    animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both;*/
+/*    position: relative;*/
+/*    width: 56px;*/
+/*    height: 56px;*/
+/*}*/
+
+/*.checkmark-circle .checkmark.draw:after {*/
+/*    animation-delay: 100ms;*/
+/*    animation-duration: 1s;*/
+/*    animation-timing-function: ease;*/
+/*    animation-name: checkmark;*/
+/*    transform: scaleX(-1) rotate(135deg);*/
+/*    animation-fill-mode: forwards;*/
+
+/*    content: '';*/
+/*    transform-origin: left top;*/
+/*    border-right: 3px solid var(--success-color);*/
+/*    border-top: 3px solid var(--success-color);*/
+/*    border-radius: 2.5px !important;*/
+/*    position: absolute;*/
+/*    left: 14px;*/
+/*    top: 26px;*/
+/*    width: 25px;*/
+/*    height: 12.5px;*/
+/*}*/
+
+/*@keyframes checkmark {*/
+/*    0% {*/
+/*        height: 0;*/
+/*        width: 0;*/
+/*        opacity: 1;*/
+/*    }*/
+/*    20% {*/
+/*        height: 0;*/
+/*        width: 10px;*/
+/*        opacity: 1;*/
+/*    }*/
+/*    40% {*/
+/*        height: 5px;*/
+/*        width: 25px;*/
+/*        opacity: 1;*/
+/*    }*/
+/*    100% {*/
+/*        height: 12.5px;*/
+/*        width: 25px;*/
+/*        opacity: 1;*/
+/*    }*/
+/*}*/
+
+/*!* Error Message *!*/
+/*.error-message {*/
+/*    text-align: center;*/
+/*    padding: 2rem 0;*/
+/*}*/
+
+/*.error-message p {*/
+/*    margin-top: 1rem;*/
+/*    color: var(--error-color);*/
+/*    font-weight: 600;*/
+/*}*/
+
+/*.error-icon {*/
+/*    width: 56px;*/
+/*    height: 56px;*/
+/*    border-radius: 50%;*/
+/*    background-color: var(--error-color);*/
+/*    color: white;*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    font-size: 32px;*/
+/*    font-weight: bold;*/
+/*    margin: 0 auto;*/
+/*}*/
+
 .examples {
     text-align: center;
     margin-bottom: 2rem;
@@ -175,6 +290,11 @@ footer {
     padding-top: 1rem;
 }
 
+.user-info, .date-info {
+    font-size: 0.8rem;
+    margin-top: 0.5rem;
+}
+
 @media (max-width: 768px) {
     h1 {
         font-size: 2rem;
@@ -197,7 +317,7 @@ footer {
 .success-message {
     text-align: center;
     padding: 2rem 0;
-    display: flex;
+    /*display: flex;*/
     flex-direction: column;
     align-items: center;
     color: #4CAF50;

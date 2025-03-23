@@ -45,14 +45,14 @@ def generate_preset():
         # Create a temporary file to store the XMP
         temp_file_path = os.path.join(TEMP_DIR, f"{preset_name}.xmp")
 
-        preset_generator.create_xmp_file(jsonData, temp_file_path)
+        xmp_content = preset_generator.create_xmp_file(jsonData)
 
-        return send_file(
-            temp_file_path,
-            as_attachment=True,
-            download_name=f"{preset_name}.xmp",
-            mimetype='application/xml'
-        )
+        return jsonify({
+            "success": True,
+            "preset_name": preset_name,
+            "xmp_content": xmp_content
+        })
+
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
