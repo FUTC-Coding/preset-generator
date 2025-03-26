@@ -9,11 +9,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
-<body>
+<body class="dark-mode">
     <div class="container">
         <header>
-            <h1>Lightroom Preset Generator</h1>
-            <p class="subtitle">Create beautiful presets with AI</p>
+            <img src="{{ url_for('static', filename='images/polychrome_logo_svg.svg') }}" alt="Logo" width="64" height="64">
+            <h1>Polychrome's LR Preset Generator</h1>
+            <p class="subtitle">Create beautiful Adobe Lightroom presets with AI</p>
         </header>
 
         <main>
@@ -57,8 +58,32 @@
             </div>
         </main>
 
+        <div class="theme-toggle-wrapper">
+            <div class="theme-toggle">
+                <input type="checkbox" id="theme-switch" class="theme-switch">
+                <label for="theme-switch" class="theme-switch-label">
+                    <span class="theme-switch-inner"></span>
+                    <span class="theme-switch-switch"></span>
+                </label>
+            </div>
+            <span id="theme-text" class="theme-text">Dark Mode</span>
+        </div>
+
+        <div class="card promo-card">
+            <div class="promo-content">
+                <img src="{{ url_for('static', filename='images/halationify_promo_dark.png') }}" alt="App Screenshot" class="app-icon dark-mode-image">
+                <img src="{{ url_for('static', filename='images/halationify_promo_light.png') }}" alt="App Screenshot" class="app-icon light-mode-image">
+                <div class="promo-text">
+                    <h3>Try The Halationify App</h3>
+                    <p>Simulate authentic analog halations on your digital images for the ultimate film look.</p>
+                    <p>Available for iPhone, iPad and Mac.</p>
+                    <a href="#" class="app-button">Download For Free</a>
+                </div>
+            </div>
+        </div>
+
         <footer>
-            <p>Powered by OpenAI & Adobe Lightroom</p>
+            <p>Made by <img src="{{ url_for('static', filename='images/polychrome_logo_svg.svg') }}" alt="Logo" width="16" height="16"> <a href="https://polychrome.dev/" target="_blank" rel="noopener noreferrer">Polychrome</a></p>
         </footer>
     </div>
 

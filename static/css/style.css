@@ -1,4 +1,20 @@
-:root {
+body.dark-mode {
+    --primary-color: #E33A22;    /* Red from logo palette */
+    --secondary-color: #F2B014;  /* Orange from logo palette */
+    --success-color: #4DB5B0;    /* Teal from logo palette */
+    --error-color: #FA5252;      /* Bright red for error states */
+    --background-color: #121212; /* Deep dark background */
+    --card-color: #1E1E1E;       /* Slightly lighter dark for cards */
+    --text-color: #ECE0B0;       /* Beige from logo palette for main text */
+    --light-text: #A0A0A0;       /* Orange for accent/highlight text */
+    --border-color: #E33A22;     /* Red border for contrast */
+    --chip-bg: #4D1C11;          /* Deep red-brown for chips */
+    --chip-hover: #6D2C21;       /* Slightly lighter red-brown for hover */
+    --accent-color: #F2B014;     /* Orange as an additional accent color */
+    --transition: all 0.3s ease;
+}
+
+body.light-mode {
     --primary-color: #4C6EF5;
     --secondary-color: #F06595;
     --success-color: #40C057;
@@ -89,7 +105,7 @@ textarea {
 textarea:focus {
     outline: none;
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(76, 110, 245, 0.2);
+    box-shadow: 0 0 0 3px var(--chip-hover);
 }
 
 .primary-btn {
@@ -108,7 +124,7 @@ textarea:focus {
 }
 
 .primary-btn:hover {
-    background-color: #3a5bd9;
+    background-color: var(--secondary-color);
     transform: translateY(-2px);
 }
 
@@ -378,4 +394,186 @@ footer {
     margin-top: 0.5rem;
     font-size: 0.8rem;
     color: #adb5bd;
+}
+
+/* Theme Toggle Switch - Updated */
+.theme-toggle-wrapper {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    gap: 10px;
+    z-index: 1000;
+}
+
+.theme-text {
+    color: var(--text-color);
+    font-weight: 600;
+}
+
+.theme-toggle {
+    position: relative;
+    width: 60px;
+    height: 35px;
+}
+
+.theme-switch {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.theme-switch-label {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--card-color);
+    transition: var(--transition);
+    border-radius: 34px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.theme-switch-inner {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+    border-radius: 34px;
+    transition: var(--transition);
+}
+
+.theme-switch-inner:before {
+    content: "☀️";
+    position: absolute;
+    left: 10px;
+    bottom: 2px;
+    font-size: 14px;
+}
+
+.theme-switch-inner:after {
+    content: "🌙";
+    position: absolute;
+    right: 10px;
+    bottom: 2px;
+    font-size: 14px;
+}
+
+.theme-switch-switch {
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    left: 4px;
+    bottom: 4px;
+    background-color: var(--primary-color);
+    transition: var(--transition);
+    border-radius: 50%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.theme-switch:checked + .theme-switch-label {
+    background-color: var(--chip-bg);
+}
+
+.theme-switch:checked + .theme-switch-label .theme-switch-switch {
+    transform: translateX(30px);
+    background-color: var(--secondary-color);
+}
+
+.theme-switch:focus + .theme-switch-label {
+    box-shadow: 0 0 3px var(--primary-color);
+}
+
+/* App Promo Card */
+.promo-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    text-align: left;
+}
+
+.promo-content {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    width: 100%;
+}
+
+.app-icon {
+    /*width: 250px;*/
+    height: 325px;
+}
+
+.promo-text {
+    flex: 1;
+}
+
+.promo-text h3 {
+    margin-bottom: 0.5rem;
+    font-size: 1.4rem;
+    color: var(--text-color);
+}
+
+.promo-text p {
+    color: var(--light-text);
+    margin-bottom: 1rem;
+}
+
+.app-button {
+    display: inline-block;
+    background-color: var(--primary-color);
+    color: white;
+    text-decoration: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.app-button:hover {
+    background-color: var(--secondary-color);
+    transform: translateY(-2px);
+}
+
+@media (max-width: 600px) {
+    .promo-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .promo-text {
+        text-align: center;
+    }
+}
+
+/* Theme-specific images */
+.dark-mode-image {
+    display: none;
+}
+
+.light-mode-image {
+    display: none;
+}
+
+body.dark-mode .dark-mode-image {
+    display: block;
+}
+
+body.dark-mode .light-mode-image {
+    display: none;
+}
+
+body.light-mode .dark-mode-image {
+    display: none;
+}
+
+body.light-mode .light-mode-image {
+    display: block;
 }

@@ -8,6 +8,44 @@ document.addEventListener('DOMContentLoaded', function() {
     const errorText = document.getElementById('error-text');
     const exampleChips = document.querySelectorAll('.chip');
 
+    // Theme toggle button
+    const themeSwitch = document.getElementById('theme-switch');
+    const themeText = document.getElementById('theme-text');
+    const body = document.body;
+
+    // Check for saved user preference, default to dark mode
+    const savedTheme = localStorage.getItem('theme') || 'dark-mode';
+
+    // Set initial state based on saved theme
+    if (savedTheme === 'light-mode') {
+        body.classList.remove('dark-mode');
+        body.classList.add('light-mode');
+        themeSwitch.checked = true;
+        themeText.textContent = 'Light Mode';
+    } else {
+        body.classList.remove('light-mode');
+        body.classList.add('dark-mode');
+        themeSwitch.checked = false;
+        themeText.textContent = 'Dark Mode';
+    }
+
+    localStorage.setItem('theme', savedTheme);
+
+    // Toggle theme
+    themeSwitch.addEventListener('change', function() {
+        if (this.checked) {
+            body.classList.remove('dark-mode');
+            body.classList.add('light-mode');
+            themeText.textContent = 'Light Mode';
+            localStorage.setItem('theme', 'light-mode');
+        } else {
+            body.classList.remove('light-mode');
+            body.classList.add('dark-mode');
+            themeText.textContent = 'Dark Mode';
+            localStorage.setItem('theme', 'dark-mode');
+        }
+    });
+
     // Track if a download is in progress
     let downloadInProgress = false;
 

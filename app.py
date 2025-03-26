@@ -66,4 +66,4 @@ def cleanup_temp_files(exception):
         print(f"Error cleaning up temp files: {e}")
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(port=8080, debug=True)
