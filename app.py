@@ -1,12 +1,21 @@
 import os
-import tempfile
 from flask import Flask, render_template, request, jsonify, send_file
 import shutil
 import main as preset_generator
+from altcha import (
+    ChallengeOptions,
+    create_challenge,
+    verify_solution,
+)
+import dotenv
+
+dotenv.load_dotenv()
+
+HMAC_KEY = os.environ.get("ALTCHA_SECRET")
+if not HMAC_KEY:
+    raise ValueError("ALTCHA_SECRET environment variable not set")
 
 app = Flask(__name__)
-
-TEMP_DIR = tempfile.mkdtemp()
 
 # Get API key from environment variable
 # OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
@@ -15,6 +24,20 @@ TEMP_DIR = tempfile.mkdtemp()
 @app.route('/')
 def index():
     return render_template('index.html')
+
+
+@app.route('/challenge', methods=['GET'])
+def get_challenge():
+    try:
+        challenge = create_challenge(
+            ChallengeOptions(
+                hmac_key=HMAC_KEY,
+                max_number=50000,
+            )
+        )
+        return jsonify(challenge.__dict__)
+    except Exception as e:
+        return jsonify({"error": f"Failed to create challenge: {str(e)}"}), 500
 
 
 @app.route('/generate-preset', methods=['POST'])
@@ -27,6 +50,21 @@ def generate_preset():
 
     if not theme:
         return jsonify({"error": "No theme provided"}), 400
+
+    # Check if ALTCHA is correct
+    payload = request.form.get('altcha')
+    if not payload:
+        return jsonify({"error": "Altcha payload missing"}), 400
+
+    try:
+        # Verify the solution
+        verified, err = verify_solution(payload, HMAC_KEY, True)
+        if not verified:
+            return ( jsonify({"error": "Invalid Altcha payload"}), 400)
+        print("altcha verification success")
+
+    except Exception as e:
+        return jsonify({"error": f"Failed to process Altcha payload: {str(e)}"}), 400
 
     try:
         # Generate preset
@@ -42,9 +80,6 @@ def generate_preset():
         preset_name = "".join(c for c in preset_name if c.isalnum() or c in [' ', '_', '-'])
         preset_name = preset_name.replace(' ', '_')
 
-        # Create a temporary file to store the XMP
-        temp_file_path = os.path.join(TEMP_DIR, f"{preset_name}.xmp")
-
         xmp_content = preset_generator.create_xmp_file(jsonData)
 
         return jsonify({
@@ -56,14 +91,6 @@ def generate_preset():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-# Clean up temp files when the app exits
-@app.teardown_appcontext
-def cleanup_temp_files(exception):
-    try:
-        if os.path.exists(TEMP_DIR):
-            shutil.rmtree(TEMP_DIR)
-    except Exception as e:
-        print(f"Error cleaning up temp files: {e}")
 
 if __name__ == '__main__':
     app.run(port=8080, debug=True)

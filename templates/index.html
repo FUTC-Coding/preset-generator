@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <script async defer src="{{ url_for('static', filename='js/altcha.min.js') }}" type="module"></script>
 </head>
 <body class="dark-mode">
     <div class="container">
@@ -23,13 +24,16 @@
                     <div class="input-section">
                         <label for="preset-theme">Describe your ideal preset:</label>
                         <textarea id="preset-theme" name="theme" placeholder="e.g., Vintage Summer, Moody Film Noir, Bright Wedding..." rows="3" required></textarea>
-                        <button type="submit" id="generate-btn" class="primary-btn">Generate & Download Preset</button>
+                        <button type="submit" id="generate-btn" class="primary-btn">Generate &  Download Preset</button>
+                        <div class="altcha-container">
+                            <altcha-widget id="altcha-widget" challengeurl="/challenge" hidefooter="true" hidelogo="true"></altcha-widget>
+                        </div>
                     </div>
                 </form>
 
                 <div id="loading" class="loading hidden">
                     <div class="spinner"></div>
-                    <p>Creating your preset...</p>
+                    <p>Creating your preset... this can take a bit</p>
                 </div>
 
                 <div id="success-message" class="success-message hidden">
@@ -54,6 +58,8 @@
                     <button class="chip" data-theme="Bright Wedding">Bright Wedding</button>
                     <button class="chip" data-theme="Cinematic Film Look">Cinematic Film</button>
                     <button class="chip" data-theme="Black & White Drama">B&W Drama</button>
+                    <button class="chip" data-theme="Kodak Gold">Kodak Gold</button>
+                    <button class="chip" data-theme="Fujifilm Pro 400H">Fujifilm Pro 400H</button>
                 </div>
             </div>
         </main>

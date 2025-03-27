@@ -3,15 +3,17 @@ import os
 import json
 import uuid
 import xml.etree.ElementTree as ET
+import ratelimiter
 
 OpenAI.api_key = os.environ["OPENAI_API_KEY"]
 client = OpenAI()
 
 
+@ratelimiter.RateLimiter(max_calls_per_minute=20)
 def generate_preset(theme):
     print("generating preset for theme: ", theme)
     response = client.responses.create(
-        model="gpt-4o",
+        model="o3-mini",
         input=[
             {"role": "system",
              "content": "You are an award winning photographer, specializing in image editing and manipulation, especially in Adobe Lightroom."

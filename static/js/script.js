@@ -61,6 +61,13 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
+        // // Get ALTCHA token
+        // const altchaWidget = document.getElementById('altcha-widget');
+        // if (!altchaWidget.isSuccess()) {
+        //     showError("Please complete the CAPTCHA verification");
+        //     return;
+        // }
+
         if (downloadInProgress) {
             return;
         }
@@ -77,13 +84,17 @@ document.addEventListener('DOMContentLoaded', function() {
             const formData = new FormData();
             formData.append('theme', theme);
 
+            // Get the altcha payload
+            const altchaPayload = document.querySelector('input[name="altcha"]').value;
+            formData.append('altcha', altchaPayload);
+
             // Send request to server
             const response = await fetch('/generate-preset', {
                 method: 'POST',
                 body: formData
             });
 
-            console.log("Response:", response);
+            //console.log("Response:", response);
 
             // Parse the JSON response
             const data = await response.json();

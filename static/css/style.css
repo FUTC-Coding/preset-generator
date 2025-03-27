@@ -577,3 +577,10 @@ body.light-mode .dark-mode-image {
 body.light-mode .light-mode-image {
     display: block;
 }
+
+/* Altcha Widget */
+.altcha-container {
+  display: flex;
+  justify-content: center;
+  margin: 15px 0;
+}
