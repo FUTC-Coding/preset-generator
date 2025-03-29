@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    {# todo: make all imports local #}
     <script async defer src="{{ url_for('static', filename='js/altcha.min.js') }}" type="module"></script>
 </head>
 <body class="dark-mode">
@@ -23,7 +24,7 @@
                 <form id="preset-form" action="/generate-preset" method="POST">
                     <div class="input-section">
                         <label for="preset-theme">Describe your ideal preset:</label>
-                        <textarea id="preset-theme" name="theme" placeholder="e.g., Vintage Summer, Moody Film Noir, Bright Wedding..." rows="3" required></textarea>
+                        <textarea id="preset-theme" name="theme" placeholder="e.g., Vintage Summer, Moody Film Noir, Bright Wedding..." rows="3" required maxlength="100"></textarea>
                         <button type="submit" id="generate-btn" class="primary-btn">Generate &  Download Preset</button>
                         <div class="altcha-container">
                             <altcha-widget id="altcha-widget" challengeurl="/challenge" hidefooter="true" hidelogo="true"></altcha-widget>

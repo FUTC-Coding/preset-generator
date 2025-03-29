@@ -54,19 +54,20 @@ document.addEventListener('DOMContentLoaded', function() {
         // Prevent the default form submission
         event.preventDefault();
 
-        const theme = themeInput.value.trim();
+        let preset = themeInput.value;
 
-        if (!theme) {
+        if (!preset) {
             showError("Please enter a preset theme description");
             return;
         }
 
-        // // Get ALTCHA token
-        // const altchaWidget = document.getElementById('altcha-widget');
-        // if (!altchaWidget.isSuccess()) {
-        //     showError("Please complete the CAPTCHA verification");
-        //     return;
-        // }
+        // Sanitize the theme input
+        preset = sanitizeTheme(themeInput.value);
+
+        if (preset.length < 3 || preset.length > 100) {
+            showError("Theme description must be between 3 and 100 characters");
+            return;
+        }
 
         if (downloadInProgress) {
             return;
@@ -82,7 +83,7 @@ document.addEventListener('DOMContentLoaded', function() {
         try {
             // Create form data for the request
             const formData = new FormData();
-            formData.append('theme', theme);
+            formData.append('theme', preset);
 
             // Get the altcha payload
             const altchaPayload = document.querySelector('input[name="altcha"]').value;
@@ -177,3 +178,13 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+function sanitizeTheme(input) {
+    // Allow only letters, numbers, and spaces
+    const sanitized = input.trim()
+        .replace(/[^a-zA-Z0-9 ]/g, "")
+        .substring(0, 100); // Limit to 100 characters
+
+    console.log("Sanitized input:", sanitized);
+    return sanitized;
+}

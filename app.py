@@ -1,6 +1,5 @@
 import os
-from flask import Flask, render_template, request, jsonify, send_file
-import shutil
+from flask import Flask, render_template, request, jsonify
 import main as preset_generator
 from altcha import (
     ChallengeOptions,
@@ -8,6 +7,9 @@ from altcha import (
     verify_solution,
 )
 import dotenv
+import re
+
+# todo: add security headers and CSP
 
 dotenv.load_dotenv()
 
@@ -42,14 +44,22 @@ def get_challenge():
 
 @app.route('/generate-preset', methods=['POST'])
 def generate_preset():
-    # if not OPENAI_API_KEY:
-    #     return jsonify({"error": "OpenAI API key not configured"}), 500
-
     # Get theme from request
     theme = request.form.get('theme')
 
+    # Validate Input
     if not theme:
         return jsonify({"error": "No theme provided"}), 400
+
+    # Sanitize input
+    theme = sanitize_input(theme)
+
+    if len(theme) < 3 or len(theme) > 100:
+        return jsonify({"error": "Theme must be between 3 and 100 characters"}), 400
+
+    # Check for prohibited content
+    if contains_prohibited_content(theme):
+        return jsonify({"error": "Input contains prohibited content"}), 400
 
     # Check if ALTCHA is correct
     payload = request.form.get('altcha')
@@ -90,6 +100,50 @@ def generate_preset():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+
+def sanitize_input(text):
+    """Sanitize user input to prevent prompt injection"""
+    if not text:
+        return ""
+
+    # Remove special characters
+    text = re.sub(r'[^a-zA-Z0-9 ]', '', text)
+
+    # Limit length
+    text = text[:100]
+
+    return text.strip()
+
+
+def contains_prohibited_content(text):
+    """Check for potentially harmful or prohibited content"""
+    # Convert to lowercase for case-insensitive matching
+    text_lower = text.lower()
+
+    # List of prohibited patterns or keywords
+    prohibited_patterns = [
+        "system:",
+        "ignore previous instructions",
+        "ignore the following message",
+        "ignore following message",
+        "ignore above",
+        "you are now",
+        "you will be",
+        "prompt injection",
+        r"\bsql\b",
+        "select * from",
+        "<script>",
+        "function()",
+        "-->"
+    ]
+
+    # Check for prohibited patterns
+    for pattern in prohibited_patterns:
+        if re.search(pattern, text_lower):
+            return True
+
+    return False
 
 
 if __name__ == '__main__':
