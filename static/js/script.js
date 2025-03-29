@@ -13,6 +13,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const themeText = document.getElementById('theme-text');
     const body = document.body;
 
+    // Character counter
+    const charCount  = document.getElementById('char-count');
+    const charCounter = document.querySelector('.char-counter');
+
     // Check for saved user preference, default to dark mode
     const savedTheme = localStorage.getItem('theme') || 'dark-mode';
 
@@ -43,6 +47,28 @@ document.addEventListener('DOMContentLoaded', function() {
             body.classList.add('dark-mode');
             themeText.textContent = 'Dark Mode';
             localStorage.setItem('theme', 'dark-mode');
+        }
+    });
+
+    // Update character count on input
+    themeInput.addEventListener('input', function() {
+        // Get the current input length after sanitization
+        const sanitized = sanitizeTheme(this.value);
+        const count = sanitized.length;
+
+        // Update the counter
+        charCount.textContent = count;
+
+        // Highlight when approaching limit
+        if (count >= 90) {
+            charCounter.classList.add('limit-reached');
+        } else {
+            charCounter.classList.remove('limit-reached');
+        }
+
+        // Update the textarea with the sanitized value
+        if (this.value !== sanitized) {
+            this.value = sanitized;
         }
     });
 
@@ -83,7 +109,7 @@ document.addEventListener('DOMContentLoaded', function() {
         try {
             // Create form data for the request
             const formData = new FormData();
-            formData.append('theme', preset);
+            formData.append('theme', preset.trim());
 
             // Get the altcha payload
             const altchaPayload = document.querySelector('input[name="altcha"]').value;
@@ -166,6 +192,8 @@ document.addEventListener('DOMContentLoaded', function() {
         downloadInProgress = false;
     }
 
+    // todo: add caching for the most frequently accessed presets (the example chips)
+
     // Handle example chips
     exampleChips.forEach(chip => {
         chip.addEventListener('click', function() {
@@ -181,7 +209,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function sanitizeTheme(input) {
     // Allow only letters, numbers, and spaces
-    const sanitized = input.trim()
+    const sanitized = input
         .replace(/[^a-zA-Z0-9 ]/g, "")
         .substring(0, 100); // Limit to 100 characters
 

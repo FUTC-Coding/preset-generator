@@ -125,6 +125,7 @@ def contains_prohibited_content(text):
     prohibited_patterns = [
         "system:",
         "ignore previous instructions",
+        "ignore all previous instructions",
         "ignore the following message",
         "ignore following message",
         "ignore above",

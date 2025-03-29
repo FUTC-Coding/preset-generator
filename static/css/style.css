@@ -584,3 +584,17 @@ body.light-mode .light-mode-image {
   justify-content: center;
   margin: 15px 0;
 }
+
+/* Character counter */
+.char-counter {
+    text-align: right;
+    font-size: 0.8rem;
+    color: var(--light-text);
+    margin-top: 0.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.char-counter.limit-reached {
+    color: var(--error-color);
+    font-weight: 600;
+}
