@@ -4,9 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lightroom Preset Generator</title>
+
+    <!-- Basic favicon -->
+    <link rel="icon" href="{{ url_for('static', filename='favicon/favicon.ico') }}" type="image/x-icon">
+    <!-- Apple Touch Icon (for iOS devices) -->
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='favicon/apple-touch-icon.png') }}">
+    <!-- Android/Chrome -->
+    <link rel="icon" type="image/png" sizes="192x192" href="{{ url_for('static', filename='favicon/android-chrome-192x192.png') }}">
+    <link rel="icon" type="image/png" sizes="512x512" href="{{ url_for('static', filename='favicon/android-chrome-512x512.png') }}">
+    <!-- Other favicon formats -->
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='favicon/favicon-16x16.png') }}">
+    <link rel="manifest" href="{{ url_for('static', filename='favicon/site.webmanifest') }}">
+
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/fonts.css') }}">
-    {# todo: make all imports local #}
     <script async defer src="{{ url_for('static', filename='js/altcha.min.js') }}" type="module"></script>
 </head>
 <body class="dark-mode">
@@ -90,6 +102,10 @@
 
         <footer>
             <p>Made by <img src="{{ url_for('static', filename='images/polychrome_logo_svg.svg') }}" alt="Logo" width="16" height="16"> <a href="https://polychrome.dev/" target="_blank" rel="noopener noreferrer">Polychrome</a></p>
+            <div class="footer-links">
+                <a href="https://polychrome.dev/impressum.html" target="_blank" rel="noopener noreferrer">Impressum</a>
+                <a href="https://polychrome.dev/privacypolicy.html" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
+            </div>
         </footer>
     </div>
 

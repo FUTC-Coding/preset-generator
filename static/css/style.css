@@ -306,6 +306,25 @@ footer {
     padding-top: 1rem;
 }
 
+.footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 10px;
+    font-size: 0.85rem;
+}
+
+footer a {
+    color: var(--light-text);
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+footer a:hover {
+    color: var(--primary-color);
+    text-decoration: underline;
+}
+
 .user-info, .date-info {
     font-size: 0.8rem;
     margin-top: 0.5rem;
