@@ -54,7 +54,13 @@ def get_challenge():
 @app.route('/generate-preset', methods=['POST'])
 def generate_preset():
     # Get theme from request
-    theme = request.form.get('theme')
+    theme = request.form.get("theme")
+    model = request.form.get("model", "gpt-4o")
+
+    # validate models
+    allowed_models = ["gpt-4o", "o4-mini", "gpt-4.1-nano"]
+    if model not in allowed_models:
+        model = "gpt-4o"
 
     # Validate Input
     if not theme:
@@ -105,7 +111,7 @@ def generate_preset():
 
     try:
         # Generate preset
-        jsonData = preset_generator.generate_preset(theme)
+        jsonData = preset_generator.generate_preset(theme, model)
         print(jsonData)
         preset_name = jsonData["Name"]
 

@@ -111,6 +111,10 @@ document.addEventListener('DOMContentLoaded', function() {
             const formData = new FormData();
             formData.append('theme', preset.trim());
 
+            // Get selected model
+            const modelSelect = document.getElementById('model-select');
+            formData.append('model', modelSelect.value);
+
             // Get the altcha payload
             const altchaPayload = document.querySelector('input[name="altcha"]').value;
             formData.append('altcha', altchaPayload);

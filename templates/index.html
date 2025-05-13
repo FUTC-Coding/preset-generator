@@ -35,6 +35,16 @@
                         <label for="preset-theme">Describe your ideal preset:</label>
                         <textarea id="preset-theme" name="theme" placeholder="e.g., Vintage Summer, Moody Film Noir, Bright Wedding..." rows="3" required maxlength="100"></textarea>
                         <div class="char-counter"><span id="char-count">0</span>/100 characters</div>
+
+                        <div class="model-selection">
+                            <label for="model-select">AI Model:</label>
+                            <select id="model-select" name="model">
+                                <option value="gpt-4o">GPT-4o</option>
+                                <option value="o4-mini">o4-mini</option>
+                                <option value="gpt-4.1-nano">GPT-4.1-nano</option>
+                            </select>
+                        </div>
+
                         <button type="submit" id="generate-btn" class="primary-btn">Generate &  Download Preset</button>
                         <div class="altcha-container">
                             <altcha-widget id="altcha-widget" challengeurl="/challenge" hidefooter="true" hidelogo="true"></altcha-widget>
