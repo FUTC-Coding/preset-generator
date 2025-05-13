@@ -8,6 +8,8 @@ from altcha import (
 )
 import dotenv
 import re
+from io import BytesIO
+from random import randrange
 
 # todo: add security headers and CSP
 
@@ -21,6 +23,14 @@ app = Flask(__name__)
 
 # Get API key from environment variable
 # OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
+
+cached = {"Vintage Summer": "Vintage_Summer",
+          "Moody Portrait": "Moody_Portrait",
+          "Bright Wedding": "Bright_Wedding",
+          "Cinematic Film": "Cinematic_Film_Look",
+          "B&W Drama": "Black_and_White_Drama",
+          "Kodak Gold": "Kodak_Gold_Look",
+          "Fujifilm Pro 400H": "Fujifilm_Pro_400H_Look"}
 
 
 @app.route('/')
@@ -75,6 +85,21 @@ def generate_preset():
 
     except Exception as e:
         return jsonify({"error": f"Failed to process Altcha payload: {str(e)}"}), 400
+
+    # Check if the preset has already been cached
+    if theme in cached.keys():
+        preset_name = cached[theme]
+        xmp_content = get_cached_preset(preset_name)
+
+        print("outputting cached preset: " + preset_name)
+        print(xmp_content)
+
+        if xmp_content:
+            return jsonify({
+                "success": True,
+                "preset_name": preset_name,
+                "xmp_content": xmp_content
+            })
 
     try:
         # Generate preset
@@ -145,6 +170,23 @@ def contains_prohibited_content(text):
             return True
 
     return False
+
+
+def get_cached_preset(preset_name):
+    # Construct the path to the cached file
+    file_name = preset_name + str(randrange(1, 3))
+    cache_path = os.path.join(".", "static", "cached", f"{file_name}.xmp")
+    print(f"getting preset {cache_path}")
+    # Check if file exists
+    if not os.path.exists(cache_path):
+        return None
+
+    # Read the file into a BytesIO object
+    with open(cache_path, 'rb') as f:
+        xml_bytes = BytesIO(f.read())
+
+    # Return the content as a UTF-8 string
+    return xml_bytes.getvalue().decode('utf-8')
 
 
 if __name__ == '__main__':

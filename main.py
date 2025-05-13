@@ -13,7 +13,7 @@ client = OpenAI()
 def generate_preset(theme):
     print("generating preset for theme: ", theme)
     response = client.responses.create(
-        model="o3-mini",
+        model="gpt-4o",
         input=[
             {"role": "system",
              "content": "You are an award winning photographer, specializing in image editing and manipulation, especially in Adobe Lightroom."
