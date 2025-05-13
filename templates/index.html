@@ -24,8 +24,7 @@
 <body class="dark-mode">
     <div class="container">
         <header>
-            <img src="{{ url_for('static', filename='images/polychrome_logo_svg.svg') }}" alt="Logo" width="64" height="64">
-            <h1>Polychrome's LR Preset Generator</h1>
+            <h1>LR Preset Generator</h1>
             <p class="subtitle">Create beautiful Adobe Lightroom presets with AI</p>
         </header>
 
@@ -86,27 +85,6 @@
             </div>
             <span id="theme-text" class="theme-text">Dark Mode</span>
         </div>
-
-        <div class="card promo-card">
-            <div class="promo-content">
-                <img src="{{ url_for('static', filename='images/halationify_promo_dark.png') }}" alt="App Screenshot" class="app-icon dark-mode-image">
-                <img src="{{ url_for('static', filename='images/halationify_promo_light.png') }}" alt="App Screenshot" class="app-icon light-mode-image">
-                <div class="promo-text">
-                    <h3>Try The Halationify App</h3>
-                    <p>Simulate authentic analog halations on your digital images for the ultimate film look.</p>
-                    <p>Available for iPhone, iPad and Mac.</p>
-                    <a href="https://apps.apple.com/app/apple-store/id6739345616?pt=127502132&ct=lrai&mt=8" class="app-button" target="_blank">Download For Free</a>
-                </div>
-            </div>
-        </div>
-
-        <footer>
-            <p>Made by <img src="{{ url_for('static', filename='images/polychrome_logo_svg.svg') }}" alt="Logo" width="16" height="16"> <a href="https://polychrome.dev/" target="_blank" rel="noopener noreferrer">Polychrome</a></p>
-            <div class="footer-links">
-                <a href="https://polychrome.dev/impressum.html" target="_blank" rel="noopener noreferrer">Impressum</a>
-                <a href="https://polychrome.dev/privacypolicy.html" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
-            </div>
-        </footer>
     </div>
 
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
