@@ -6,8 +6,7 @@ from altcha import (
     create_challenge,
     verify_solution,
 )
-import dotenv
-import re
+import dotenv, re, time
 from io import BytesIO
 from random import randrange
 
@@ -93,6 +92,9 @@ def generate_preset():
 
         print("outputting cached preset: " + preset_name)
         print(xmp_content)
+
+        # Add delay before returning cached results to make it less obvious for the user
+        time.sleep(3)
 
         if xmp_content:
             return jsonify({
