@@ -3,3 +3,6 @@ openai==1.68.2
 python-dotenv==1.1.0
 altcha==0.1.9
 gunicorn==23.0.0
+transformers==4.40.1
+sentence-transformers==2.6.1
+faiss-cpu==1.11.0
