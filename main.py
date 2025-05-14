@@ -11,7 +11,7 @@ client = OpenAI()
 
 
 @ratelimiter.RateLimiter(max_calls_per_minute=20)
-def generate_preset(theme):
+def generate_preset(theme, print_input = False):
     print("generating preset for theme: ", theme)
     few_shot_themes, few_shot_configs = few_shot_examples(theme)
     few_shot_blocks = []
@@ -311,6 +311,18 @@ def generate_preset(theme):
         }
     )
 
+    print([
+    {
+        "role": "system",
+        "content": "You are an award winning photographer, specializing in image editing and manipulation, especially in Adobe Lightroom. "
+                   "Create settings for a Lightroom preset that matches the named theme."
+    },
+    {
+        "role": "user",
+        "content": "Please make a lightroom preset that matches the theme of " + theme + 
+                   ". Here are examples of similar themes and their outputs:\n\n" + few_shot_text
+    }
+    ])
     event = json.loads(response.output_text)
     print(event)
     print(response.usage.total_tokens)

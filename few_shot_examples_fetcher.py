@@ -2,15 +2,15 @@ from transformers import pipeline
 from sentence_transformers import SentenceTransformer, util
 import pandas as pd
 import faiss
+import os
 
 def few_shot_examples(theme):
 
-
-    path = r"/Themes Dataset/lightroom_theme_configs.csv"
+    path = r"C:\Users\niket\OneDrive\Data Science\4. Semester\Cloud Computing and Distributed Systems\preset-generator\Themes Dataset\lightroom_theme_configs.csv"
     df = pd.read_csv(path)
     model = SentenceTransformer("all-MiniLM-L6-v2")
 
-    index = faiss.read_index("/full_index_faiss.index")
+    index = faiss.read_index(r"C:\Users\niket\OneDrive\Data Science\4. Semester\Cloud Computing and Distributed Systems\preset-generator\full_index_faiss.index")
     query = model.encode([theme])
 
     distances, indices = index.search(query, k=2)
