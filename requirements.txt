@@ -6,3 +6,4 @@ gunicorn==23.0.0
 transformers==4.40.1
 sentence-transformers==2.6.1
 faiss-cpu==1.11.0
+pandas==2.2.3
