@@ -17,16 +17,16 @@ def generate_preset(theme, print_input = False):
     few_shot_blocks = []
     for example_theme, config in zip(few_shot_themes, few_shot_configs):
         config_str = config.replace("\n", "").replace(" ", "")  
-        block = f"Theme: {example_theme}\nSettings: {config_str}"
+        block = f"Theme: {example_theme} Settings: {config_str}"
         few_shot_blocks.append(block)
-    few_shot_text = "\n\n".join(few_shot_blocks)
+    few_shot_text = " ".join(few_shot_blocks)
     response = client.responses.create(
         model="gpt-4.1-nano",
         input=[
             {"role": "system",
              "content": "You are an award winning photographer, specializing in image editing and manipulation, especially in Adobe Lightroom."
                         "Create settings for a Lightroom preset that matches the named theme."},
-            {"role": "user", "content": "Please make a lightroom preset that matches the theme of " + theme + "Here are examples of similar themes and their outputs: " + few_shot_text},
+            {"role": "user", "content": "Please make a lightroom preset that matches the theme of " + theme + " Here are examples of similar themes and their outputs: " + few_shot_text},
         ],
         text={
             "format": {
@@ -320,9 +320,9 @@ def generate_preset(theme, print_input = False):
     {
         "role": "user",
         "content": "Please make a lightroom preset that matches the theme of " + theme + 
-                   ". Here are examples of similar themes and their outputs:\n\n" + few_shot_text
+                   ". Here are examples of similar themes and their outputs: " + few_shot_text
     }
-    ])
+    ],flush=True)
     event = json.loads(response.output_text)
     print(event)
     print(response.usage.total_tokens)
