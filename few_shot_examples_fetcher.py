@@ -10,7 +10,7 @@ csv_path = os.path.join("Themes Dataset", "lightroom_theme_configs.csv")
 index = faiss.read_index(index_path)
 df = pd.read_csv(csv_path)
 
-def few_shot_examples(theme, k=2):
+def few_shot_examples(theme, k=1):
     if not theme or not isinstance(theme, str):
         raise ValueError("Theme must be a non-empty string.")
 
