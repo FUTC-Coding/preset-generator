@@ -14,6 +14,7 @@ COPY . .
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 ENV FLASK_APP=app.py
+ENV TOKENIZERS_PARALLELISM=false
 
 # Expose port for Flask
 EXPOSE 8000
@@ -24,4 +25,4 @@ RUN chown -R appuser:appuser /web-flask
 USER appuser
 
 # Command to run the application with gunicorn
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "-w 4", "app:app"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "-w", "2", "--preload", "app:app"]
