@@ -25,4 +25,4 @@ RUN chown -R appuser:appuser /web-flask
 USER appuser
 
 # Command to run the application with gunicorn
-CMD ["gunicorn", "--bind", "0.0.0.0:8080", "-w", "2", "--threads", "4", "app:app"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8090", "-w", "2", "--threads", "4", "app:app"]
