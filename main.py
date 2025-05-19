@@ -12,7 +12,7 @@ OpenAI.api_key = os.environ["OPENAI_API_KEY"]
 client = OpenAI()
 
 
-@ratelimiter.RateLimiter(max_calls_per_minute=60)
+#@ratelimiter.RateLimiter(max_calls_per_minute=60)
 def generate_preset(theme, model, print_input = False):
     few_shot_themes, few_shot_configs = few_shot_examples(theme)
     few_shot_blocks = []
