@@ -12,7 +12,6 @@ client = OpenAI()
 
 @ratelimiter.RateLimiter(max_calls_per_minute=60)
 def generate_preset(theme, model, print_input = False):
-    print(f"generating preset for theme: {theme} using mode: {model}")
     few_shot_themes, few_shot_configs = few_shot_examples(theme)
     few_shot_blocks = []
     for example_theme, config in zip(few_shot_themes, few_shot_configs):
@@ -20,6 +19,7 @@ def generate_preset(theme, model, print_input = False):
         block = f"Theme: {example_theme} Settings: {config_str}"
         few_shot_blocks.append(block)
     few_shot_text = " ".join(few_shot_blocks)
+    print(f"generating preset for theme: {theme} using mode: {model} and few shot settings: {few_shot_themes}", flush=True)
     response = client.responses.create(
         model=model,
         input=[
@@ -311,21 +311,8 @@ def generate_preset(theme, model, print_input = False):
         }
     )
 
-    print([
-    {
-        "role": "system",
-        "content": "You are an award winning photographer, specializing in image editing and manipulation, especially in Adobe Lightroom. "
-                   "Create settings for a Lightroom preset that matches the named theme."
-    },
-    {
-        "role": "user",
-        "content": "Please make a lightroom preset that matches the theme of " + theme +
-                   ". Here are examples of similar themes and their outputs: " + few_shot_text
-    }
-    ],flush=True)
     event = json.loads(response.output_text)
-    print(event)
-    print(response.usage.total_tokens)
+    print(response.usage.total_tokens, flush=True)
 
     return event
 

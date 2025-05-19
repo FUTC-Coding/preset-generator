@@ -104,7 +104,7 @@ def generate_preset():
         xmp_content = get_cached_preset(preset_name)
 
         print("outputting cached preset: " + preset_name)
-        print(xmp_content)
+        # print(xmp_content)
 
         # Add delay before returning cached results to make it less obvious for the user
         # time.sleep(3)
@@ -119,7 +119,7 @@ def generate_preset():
     try:
         # Generate preset
         jsonData = preset_generator.generate_preset(theme, model)
-        print(jsonData)
+        # print(jsonData)
         preset_name = jsonData["Name"]
 
         # Ensure we have a valid, safe name
