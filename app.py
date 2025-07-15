@@ -54,7 +54,13 @@ def get_challenge():
 @app.route('/generate-preset', methods=['POST'])
 def generate_preset():
     # Get theme from request
-    theme = request.form.get('theme')
+    theme = request.form.get("theme")
+    model = request.form.get("model", "gpt-4o")
+
+    # validate models
+    allowed_models = ["gpt-4o", "o4-mini", "gpt-4.1-nano"]
+    if model not in allowed_models:
+        model = "gpt-4o"
 
     # Validate Input
     if not theme:
@@ -85,27 +91,30 @@ def generate_preset():
     except Exception as e:
         return jsonify({"error": f"Failed to process Altcha payload: {str(e)}"}), 400
 
+
+    # Disabled Caching for now
+
     # Check if the preset has already been cached
-    if theme in cached.keys():
-        preset_name = cached[theme]
-        xmp_content = get_cached_preset(preset_name)
-
-        print("outputting cached preset: " + preset_name)
-        print(xmp_content)
-
-        # Add delay before returning cached results to make it less obvious for the user
-        time.sleep(3)
-
-        if xmp_content:
-            return jsonify({
-                "success": True,
-                "preset_name": preset_name,
-                "xmp_content": xmp_content
-            })
+    # if theme in cached.keys():
+    #     preset_name = cached[theme]
+    #     xmp_content = get_cached_preset(preset_name)
+    #
+    #     print("outputting cached preset: " + preset_name)
+    #     print(xmp_content)
+    #
+    #     # Add delay before returning cached results to make it less obvious for the user
+    #     time.sleep(3)
+    #
+    #     if xmp_content:
+    #         return jsonify({
+    #             "success": True,
+    #             "preset_name": preset_name,
+    #             "xmp_content": xmp_content
+    #         })
 
     try:
         # Generate preset
-        jsonData = preset_generator.generate_preset(theme)
+        jsonData = preset_generator.generate_preset(theme, model)
         print(jsonData)
         preset_name = jsonData["Name"]
 

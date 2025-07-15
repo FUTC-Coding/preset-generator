@@ -10,10 +10,10 @@ client = OpenAI()
 
 
 @ratelimiter.RateLimiter(max_calls_per_minute=20)
-def generate_preset(theme):
+def generate_preset(theme, model):
     print("generating preset for theme: ", theme)
     response = client.responses.create(
-        model="gpt-4o",
+        model=model,
         input=[
             {"role": "system",
              "content": "You are an award winning photographer, specializing in image editing and manipulation, especially in Adobe Lightroom."

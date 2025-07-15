@@ -617,3 +617,35 @@ body.light-mode .light-mode-image {
     color: var(--error-color);
     font-weight: 600;
 }
+
+/* Model Selection Dropdown */
+.model-selection {
+    margin: 1rem 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.model-selection label {
+    margin-bottom: 0;
+    min-width: 80px;
+}
+
+.model-selection select {
+    flex: 1;
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: var(--card-color);
+    color: var(--text-color);
+    font-family: inherit;
+    font-size: 0.9rem;
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.model-selection select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px var(--chip-hover);
+}
